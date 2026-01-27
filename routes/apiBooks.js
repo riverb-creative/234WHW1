@@ -1,5 +1,5 @@
 /** -----------------------
- * userRouter.js
+ * apiBooks.js
  * 
  * define the routes (method + path) the api responds to.
  * note that each path defined here assumes that /books has been typed in
