@@ -1,5 +1,5 @@
 /** -----------------------
- * userRouter.js
+ * apiUsers.js
  * 
  * define the routes (method + path) the api responds to.
  * note that each path defined here assumes that /users has been typed in
