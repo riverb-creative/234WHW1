@@ -7,15 +7,18 @@
 //import frameworks, modules,  libraries, and external data
     const express = require('express');
     const app = express();
+    const helmet = require('helmet');
 
     require("./config/db");
-    const Book = require('./models/Book');
     const apiBooks = require('./routes/apiBooks');
+    const apiUsers = require('./routes/apiUsers');
     
 //application level middleware
     app.use(express.json());
+    app.use(helmet());
     app.use(express.urlencoded({ extended: true }));
     app.use('/books', apiBooks);
+    app.use('/users', apiUsers);
 
 //server settings
     const PORT = 3000;

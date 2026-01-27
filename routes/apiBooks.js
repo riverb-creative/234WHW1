@@ -2,14 +2,16 @@
  * userRouter.js
  * 
  * define the routes (method + path) the api responds to.
- * note that each path defined here assumes that /users has been typed in
+ * note that each path defined here assumes that /books has been typed in
  */
 
 //imports
 const express = require('express');
 const mongoose = require('mongoose');
+const {body, param} = require('express-validator');
 const router = express.Router();
 const Book = require('../models/Book');
+const authenticate = require('../middleware/requireAuth');
 const bookController = require('../controllers/bookController');
 
 //method    =   GET
@@ -26,13 +28,14 @@ router.get("/:theGenre", bookController.getBookByGenre);
 
 //method    =   POST
 //path      =   http://localhost:3000/books
-//response  =   add user data to collection and return success message
+//response  =   add book data to collection and return success message
 router.post("/", bookController.addBook);
 
 //method    =   DELETE
 //path      =   http://localhost:3000/books
 //response  =   remove book data from collection and return success message
-router.delete("/:bookId", (request, response) => {
+router.delete("/:bookId", authenticate, (request, response) => {
+    body("._id").trim().notEmpty().escape().withMessage("Book ID is required")
     bookController.deleteBook(request, response)
 });
 

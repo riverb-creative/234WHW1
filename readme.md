@@ -1,6 +1,6 @@
 # CS 234W - Such Catchy Book Review App
 ## Author: River
-### Date: 01/14/2026
+### Date: 01/26/2026
 
 **Description:** CS 234W Term Project | building a book review Express API that connects to an external data store and demonstrates basic CRUD functionality
 
@@ -13,7 +13,14 @@ Dependencies & How To Install Them:
 >         - npm install dotenv
 >    - mongoose
 >         - npm install mongoose
-
+>    - bcrypt
+>         - npm install bcrypt
+>    - express-rate-limit
+>         - npm install express-rate-limit
+>    - helmet
+>         - npm install helmet
+>    - jsonwebtoken
+>         - npm install jsonwebtoken
 
 > [!IMPORTANT]
 > Instructions to run server with URLs to test routes:
@@ -96,3 +103,55 @@ Dependencies & How To Install Them:
    > 6. In the _Headers_ tab, make sure the _Content-Type_ in the header section and _application/json_ in the value section are **NOT** selected
    > 7. Click the _Send_ button, you will get a response that the book related to the Id you entered in the URL has been deleted
    > 8. Go to _http://localhost:3000/books_ in the browser to check that the book you selected has been deleted
+
+> Security Best-Practices Demonstrated
+   > * Environment variables for secrets used for JSON Web Token and Mongo DB Atlas
+   > * Using Helmet middleware to set security-related HTTP response headers
+   > * Input validation used on router of apiUsers (add user, & edit user) and apiBooks (delete book)
+   > * The use of proper HTTP status codes: 200, 201, 400, 401, 409, & 500
+   > * Avoiding the inclusion of sensitive data in responses: passwords not shown in responses
+
+> Protected Routes:
+   > * apiBooks route is protected by using the jsonwebtoken, so only authorized users can delete a book by its Book ID
+   > * Both apiBooks and apiUsers routes are protected with express-validator dependencies with the _.escape()_ option in order to sanitize any text that has HTML mark up characters.
+
+> [!IMPORTANT]
+> Instructions on how to register user:
+> 1. Create clone of 234W repository from GitHub
+> 2. Initialize node.js with _npm init_
+> 3. If needed install all dependecies listed above
+> 4. To run the server and test it type _run node server.js_ or _npm start_
+> 5. Install the extension _Thunder Client_ in Visual Studio Code
+> 6. Make sure the server is started
+> 7. Create a new request
+> 8. Change the method to POST
+> 9. Change the URL _http://localhost:3000/users_
+> 10. In the _Headers_ tab, enter _Content-Type_ in the header section and _application/json_ in the value section
+> 11. Go to the _Body_ tab, make sure it is on _JSON_ and enter something similar to what is listed for a successful response:\
+>    `{
+>       "userName": "test",`\
+>      ` "email": "test@gmail.com",`\
+>      ` "password":Il0vepasswords!`\
+>      ` }`\
+>           * The userName, email, and password fields are required
+>           * Password needs to be:
+>              * Minimum of 12 characters
+>              * At least ONE uppercase letter
+>              * At least ONE lowercase letter
+>              * At least ONE number
+>              * At least ONE special character: [ ! @ # $ % ^ & * ( ) ]
+> 12. Click the _Send_ button, you will get a response that the user added was successful
+> 13. Go to _http://localhost:3000/users_ in the browser to check that the user you registered has been added
+> 14. To get an unsuccessful response follow steps 1 through 10 if anything was changed
+> 11. Go to the _Body_ tab, make sure it is on _JSON_ and enter something similar to what is listed for a unsuccessful response:\
+>    `{
+>       "userName": "test2",`\
+>      ` "email": "test2@gmail.com",`\
+>      ` "password":passw0rd`\
+>      ` }`\
+>           * The userName, email, and password fields are required
+>           * Since the password is:
+>              * Less than 12 characters: an error response will appear with error message
+>              * No uppercase letters: an error response will appear with error message
+>              * No special characters: an error response will appear with an error message
+
