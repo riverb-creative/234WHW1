@@ -152,7 +152,7 @@ Dependencies & How To Install Them:
 >      ` }`\
 >          * The userName, email, and password fields are required
 >           * Since the password is:
->              * Less than 12 characters: an error response will appear with error message
+>              *  Less than 12 characters: an error response will appear with error message
 >              * No uppercase letters: an error response will appear with error message
 >              * No special characters: an error response will appear with an error message
 
